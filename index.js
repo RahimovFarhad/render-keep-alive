@@ -1,10 +1,9 @@
-import http from "http";
 import https from "https";
 
 const PORT = process.env.PORT || 3000;
 
 // Local server (self ping target)
-const server = http.createServer((req, res) => {
+const server = https.createServer((req, res) => {
   if (req.url === "/ping") {
     res.writeHead(200);
     res.end("pong");
@@ -22,13 +21,13 @@ server.listen(PORT, () => {
 // ---- KEEP ALIVE LOGIC ----
 
 function pingSelf() {
-  http.get(`${process.env.URL}/ping`, (res) => {
+  https.get(`${process.env.URL}/ping`, (res) => {
     console.log(`[${new Date().toISOString()}] Self ping: ${res.statusCode}`);
   }).on("error", console.error);
 }
 
 function pingRenderApp() {
-  https.get("https://kontral.onrender.com", (res) => {
+  https.get(process.env.TargetURL, (res) => {
     console.log(
       `[${new Date().toISOString()}] Render ping: ${res.statusCode}`
     );
