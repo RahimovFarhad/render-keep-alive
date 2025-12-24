@@ -1,9 +1,10 @@
+import http from "http";
 import https from "https";
 
 const PORT = process.env.PORT || 3000;
 
 // Local server (self ping target)
-const server = https.createServer((req, res) => {
+const server = http.createServer((req, res) => {
   if (req.url === "/ping") {
     res.writeHead(200);
     res.end("pong");
